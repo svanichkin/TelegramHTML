@@ -1,4 +1,4 @@
-module https://github.com/svanichkin/TelegramHTML
+module github.com/svanichkin/TelegramHTML
 
 go 1.23.0
 
