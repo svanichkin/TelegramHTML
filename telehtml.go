@@ -359,3 +359,86 @@ func findEnclosingTags(text string, pos int) (string, string) {
 
 	return "", ""
 }
+
+// Invisible Int tag
+
+func EncodeIntInvisible(n int) string {
+	
+	if n == 0 {
+		return string(invisibleRunes[0])
+	}
+	
+	var result []rune
+	for n > 0 {
+		digit := n % 10
+		result = append([]rune{invisibleRunes[digit]}, result...)
+		n /= 10
+	}
+	
+	return string(result)
+}
+
+func DecodeIntInvisible(s string) int {
+	
+	var result int
+	for _, r := range s {
+		if d, ok := runeToDigit[r]; ok {
+			result = result*10 + d
+		}
+	}
+	
+	return result
+}
+
+var invisibleRunes = []rune{
+	'\u200B', // 0 Zero Width Space
+	'\u200C', // 1 Zero Width Non-Joiner
+	'\u200D', // 2 Zero Width Joiner
+	'\u2060', // 3 Word Joiner
+	'\uFEFF', // 4 Zero Width No-Break Space
+	'\u2061', // 5 Function Application
+	'\u2062', // 6 Invisible Times
+	'\u2063', // 7 Invisible Separator
+	'\u2064', // 8 Invisible Plus
+	'\u034F', // 9 Combining Grapheme Joiner
+}
+
+var runeToDigit = func() map[rune]int {
+	
+	m := make(map[rune]int)
+	for i, r := range invisibleRunes {
+		m[r] = int(i)
+	}
+	return m
+	
+}()
+
+var invisibleSet = func() map[rune]bool {
+	
+	m := make(map[rune]bool)
+	for _, r := range invisibleRunes {
+		m[r] = true
+	}
+	return m
+	
+}()
+
+func findInvisibleUidSequences(s string) []string {
+	
+	var sequences []string
+	var current []rune
+	
+	for _, r := range s {
+		if invisibleSet[r] {
+			current = append(current, r)
+		} else if len(current) > 0 {
+			sequences = append(sequences, string(current))
+			current = nil
+		}
+	}
+	if len(current) > 0 {
+		sequences = append(sequences, string(current))
+	}
+	
+	return sequences
+}
