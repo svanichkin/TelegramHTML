@@ -1,4 +1,4 @@
-# telehtml
+# Telegram HTML
 
 `telehtml` — Go utility for cleaning and formatting HTML to match Telegram message formatting requirements.
 
