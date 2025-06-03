@@ -1,4 +1,4 @@
-module email_bot
+module telehtml
 
 go 1.23.0
 

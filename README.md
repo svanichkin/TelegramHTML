@@ -12,13 +12,13 @@
 ## Installation
 
 ```bash
-go get github.com/svanichkin/telehtml
+go get github.com/svanichkin/TelegramHTML
 ```
 
 ## Usage
 
 ```go
-import "github.com/svanichkin/telehtml"
+import "github.com/svanichkin/TelegramHTML"
 
 cleanedHTML := telehtml.CleanTelegramHTML(rawHTML)
 splittedHTML := telehtml.SplitTelegramHTML(cleaned)
