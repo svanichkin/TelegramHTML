@@ -1,4 +1,4 @@
-module telehtml
+module https://github.com/svanichkin/TelegramHTML
 
 go 1.23.0
 
