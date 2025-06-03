@@ -390,6 +390,27 @@ func DecodeIntInvisible(s string) int {
 	return result
 }
 
+func FindInvisibleIntSequences(s string) []string {
+	
+	var sequences []string
+	var current []rune
+	
+	for _, r := range s {
+		if invisibleSet[r] {
+			current = append(current, r)
+		} else if len(current) > 0 {
+			sequences = append(sequences, string(current))
+			current = nil
+		}
+	}
+	if len(current) > 0 {
+		sequences = append(sequences, string(current))
+	}
+	
+	return sequences
+}
+
+
 var invisibleRunes = []rune{
 	'\u200B', // 0 Zero Width Space
 	'\u200C', // 1 Zero Width Non-Joiner
@@ -422,23 +443,3 @@ var invisibleSet = func() map[rune]bool {
 	return m
 	
 }()
-
-func findInvisibleUidSequences(s string) []string {
-	
-	var sequences []string
-	var current []rune
-	
-	for _, r := range s {
-		if invisibleSet[r] {
-			current = append(current, r)
-		} else if len(current) > 0 {
-			sequences = append(sequences, string(current))
-			current = nil
-		}
-	}
-	if len(current) > 0 {
-		sequences = append(sequences, string(current))
-	}
-	
-	return sequences
-}
